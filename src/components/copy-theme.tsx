@@ -25,7 +25,10 @@ export function CopyTheme() {
           .getPropertyValue(item.variable)
           .split(" ")
           .join(" ");
-        return `${item.variable}: ${color};`;
+
+        const colorHex = rootStyles.getPropertyValue(item.hex);
+        console.log(colorHex)
+        return `${item.variable}: ${color} //${colorHex}`;
       })
       .join("\n");
 

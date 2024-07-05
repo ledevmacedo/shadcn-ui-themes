@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  HslColor,
   HsvaColor,
   Hue,
   Saturation,
@@ -34,8 +33,9 @@ interface ItemProps {
 
 export function Item({ theme }: ItemProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [hsva, setHsva] = useState({ h: 0, s: 0, v: 68, a: 1 });
+  const [hsva, setHsva] = useState<HsvaColor>({ h: 0, s: 0, v: 68, a: 1 });
   const [hexValue, setHexValue] = useState("#000000");
+  const [hsl, setHsl] = useState({ h: 0, s: 0, l: 0, a: 1 });
 
   useEffect(() => {
     const rootStyles = window.getComputedStyle(document.documentElement);
@@ -50,41 +50,73 @@ export function Item({ theme }: ItemProps) {
 
     setHsva(hsvaColor);
     setHexValue(hsvaToHex(hsvaColor));
+    setHsl(hsvaToHsla(hsvaColor));
   }, [isOpen]);
 
-  const updateColors = (color: HslColor) => {
+  const updateColors = (color: { h: number; s: number; l: number; a: number }) => {
     (document.querySelector(":root") as HTMLElement)?.style.setProperty(
       theme.variable,
-      `${color.h.toFixed(2)} ${color.s.toFixed(2)}% ${color.l.toFixed(2)}%`,
+      `${color.h.toFixed(2)} ${color.s.toFixed(2)}% ${color.l.toFixed(2)}% / ${color.a}`,
     );
   };
 
-  const handleEyeDropper = (color: HslColor) => {
-    const hsvaColor = hslaToHsva({ ...color, a: 1 });
+  const updateHex = (color: string) => {
+    (document.querySelector(":root") as HTMLElement)?.style.setProperty(
+      theme.hex,
+      `${color}`,
+    );
+  }
+
+  const handleEyeDropper = (color: { h: number; s: number; l: number }) => {
+    const hsvaColor = hslaToHsva({ ...color, a: hsl.a });
     setHexValue(hsvaToHex(hsvaColor));
     setHsva(hsvaColor);
-    updateColors(color);
+    setHsl({ ...color, a: hsl.a });
+    updateColors({ ...color, a: hsl.a });
+    updateHex(hexValue);
   };
 
   const handleSaturation = (color: HsvaColor) => {
     setHsva(color);
     setHexValue(hsvaToHex(color));
-    updateColors(hsvaToHsla(color));
+    const hslaColor = hsvaToHsla(color);
+    setHsl(hslaColor);
+    updateColors(hslaColor);
+    updateHex(hexValue);
   };
 
   const handleHue = (color: { h: number }) => {
-    setHsva({ ...hsva, h: color.h });
-    setHexValue(hsvaToHex({ ...hsva, h: color.h }));
-    updateColors(hsvaToHsla({ ...hsva }));
+    const newHsva = { ...hsva, h: color.h };
+    setHsva(newHsva);
+    setHexValue(hsvaToHex(newHsva));
+    const hslaColor = hsvaToHsla(newHsva);
+    setHsl(hslaColor);
+    updateColors(hslaColor);
+    updateHex(hexValue);
   };
 
   const handleHex = (color: string) => {
     setHexValue(color);
 
     if (validHex(color)) {
-      setHsva(hexToHsva(color));
-      updateColors(hsvaToHsla(hexToHsva(color)));
+      const hsvaColor = hexToHsva(color);
+      setHsva(hsvaColor);
+      const hslaColor = hsvaToHsla(hsvaColor);
+      setHsl(hslaColor);
+      updateColors(hslaColor);
+      updateHex(hexValue);
     }
+  };
+
+  const handleHslChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
+    const value = parseFloat(e.target.value);
+    const newHsl = { ...hsl, [type]: value };
+    setHsl(newHsl);
+    const hsvaColor = hslaToHsva(newHsl);
+    setHsva(hsvaColor);
+    setHexValue(hsvaToHex(hsvaColor));
+    updateColors(newHsl);
+    updateHex(hexValue);
   };
 
   return (
@@ -129,6 +161,34 @@ export function Item({ theme }: ItemProps) {
                   onChange={(e) => handleHex(e.target.value)}
                 />
               </div>
+
+              {/* <div className="mt-0.5 ">
+                <Label className="text-xs">H</Label>
+                <div>
+
+
+                  <Input
+                    className="h-7 px-1 pb-1.5 text-xs"
+                    value={hsl.h}
+                    onChange={(e) => handleHslChange(e, 'h')}
+                  />
+                  <Input
+                    className="h-7 px-1 pb-1.5 text-xs"
+                    value={hsl.s}
+                    onChange={(e) => handleHslChange(e, 's')}
+                  />
+                  <Input
+                    className="h-7 px-1 pb-1.5 text-xs"
+                    value={hsl.l}
+                    onChange={(e) => handleHslChange(e, 'l')}
+                  />
+                  <Input
+                    className="h-7 px-1 pb-1.5 text-xs"
+                    value={hsl.a}
+                    onChange={(e) => handleHslChange(e, 'a')}
+                  />
+                </div>
+              </div> */}
             </div>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -14,7 +14,7 @@ export function getColors() {
       .getPropertyValue(item.variable)
       .split(" ")
       .join(" ");
-    return { title: item.title, variable: item.variable, color };
+    return { title: item.title, variable: item.variable, hex: item.hex, color };
   });
 
   return themeString;

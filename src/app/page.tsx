@@ -1,4 +1,6 @@
 import { CopyTheme } from "@/components/copy-theme";
+import { Checkbox } from "@/components/ui/checkbox"
+
 import { Header } from "@/components/header";
 import { AlertCircle, ArrowRight, Terminal } from "@/components/icons";
 import { Sidebar } from "@/components/sidebar";
@@ -135,7 +137,17 @@ export default function Home() {
                   <Button>Deploy</Button>
                 </CardFooter>
               </Card>
-
+              <div className="flex flex-col gap.2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="terms" />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Accept terms and conditions
+                  </label>
+                </div>
+              </div>
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Is it accessible?</AccordionTrigger>

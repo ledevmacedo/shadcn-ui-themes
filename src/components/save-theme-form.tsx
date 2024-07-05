@@ -44,11 +44,12 @@ export function SaveThemeForm({ handleClose }: ISaveThemeFormProps) {
 
     const themeData = {
       name: data.name,
-      colors: themeColors.map(({ title, variable, color }) => {
+      colors: themeColors.map(({ title, variable, color, hex }) => {
         return {
           title,
           variable,
           color,
+          hex,
         };
       }),
       radius: themeRadius,
