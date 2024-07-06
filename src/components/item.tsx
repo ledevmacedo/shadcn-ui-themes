@@ -106,6 +106,7 @@ export function Item({ theme }: ItemProps) {
       updateColors(hslaColor);
       updateHex(hexValue);
     }
+    console.log(updateHex)
   };
 
   const handleHslChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
