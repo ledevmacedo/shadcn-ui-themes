@@ -78,7 +78,7 @@ export function CopyTheme() {
           colorHex = hslToHex(color);
         }
 
-        return `${item.variable}: ${color}; // ${colorHex}`;
+        return `${item.variable}: ${color} //${colorHex}`;
       })
       .join("\n");
 

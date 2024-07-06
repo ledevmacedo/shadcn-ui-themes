@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "./ui/slider";
 
 interface ItemProps {
   theme: Theme;
@@ -56,16 +57,17 @@ export function Item({ theme }: ItemProps) {
   const updateColors = (color: { h: number; s: number; l: number; a: number }) => {
     (document.querySelector(":root") as HTMLElement)?.style.setProperty(
       theme.variable,
-      `${color.h.toFixed(2)} ${color.s.toFixed(2)}% ${color.l.toFixed(2)}% / ${color.a}`,
+      `${color.h.toFixed(2)} ${color.s.toFixed(2)}% ${color.l.toFixed(2)}% / ${color.a.toFixed(2)}`,
     );
   };
 
-  const updateHex = (color: string) => {
+
+  const updateHex = (color: string, alpha: string) => {
     (document.querySelector(":root") as HTMLElement)?.style.setProperty(
       theme.hex,
-      `${color}`,
+      `${color}- ${alpha}%`,
     );
-  }
+  };
 
   const handleEyeDropper = (color: { h: number; s: number; l: number }) => {
     const hsvaColor = hslaToHsva({ ...color, a: hsl.a });
@@ -73,7 +75,7 @@ export function Item({ theme }: ItemProps) {
     setHsva(hsvaColor);
     setHsl({ ...color, a: hsl.a });
     updateColors({ ...color, a: hsl.a });
-    updateHex(hexValue);
+    updateHex(hexValue, alpha.toString());
   };
 
   const handleSaturation = (color: HsvaColor) => {
@@ -82,7 +84,7 @@ export function Item({ theme }: ItemProps) {
     const hslaColor = hsvaToHsla(color);
     setHsl(hslaColor);
     updateColors(hslaColor);
-    updateHex(hexValue);
+    updateHex(hexValue, alpha.toString());
   };
 
   const handleHue = (color: { h: number }) => {
@@ -92,7 +94,7 @@ export function Item({ theme }: ItemProps) {
     const hslaColor = hsvaToHsla(newHsva);
     setHsl(hslaColor);
     updateColors(hslaColor);
-    updateHex(hexValue);
+    updateHex(hexValue, alpha.toString());
   };
 
   const handleHex = (color: string) => {
@@ -104,9 +106,8 @@ export function Item({ theme }: ItemProps) {
       const hslaColor = hsvaToHsla(hsvaColor);
       setHsl(hslaColor);
       updateColors(hslaColor);
-      updateHex(hexValue);
+      updateHex(hexValue, alpha.toString());
     }
-    console.log(updateHex)
   };
 
   const handleHslChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
@@ -117,8 +118,28 @@ export function Item({ theme }: ItemProps) {
     setHsva(hsvaColor);
     setHexValue(hsvaToHex(hsvaColor));
     updateColors(newHsl);
-    updateHex(hexValue);
+    updateHex(hexValue, alpha.toString());
   };
+
+  const handleSliderChange = (newAlpha: number[]) => {
+    const newHsva = { ...hsva, a: newAlpha[0] / 100 };
+    setHsva(newHsva);
+    setHsl({ ...hsl, a: newAlpha[0] / 100 });
+    setAlpha(newAlpha);
+    updateColors({ ...hsl, a: newAlpha[0] / 100 });
+  };
+
+  const formatSliderValue = (alpha: number): string => {
+    if (alpha === 0) {
+      return "0";
+    } else if (alpha < 100) {
+      return (alpha / 100).toFixed(2);
+    } else {
+      return "1";
+    }
+  };
+
+  const [alpha, setAlpha] = useState<number[]>([Math.round(hsva.a * 100)]);
 
   return (
     <div>
@@ -162,34 +183,23 @@ export function Item({ theme }: ItemProps) {
                   onChange={(e) => handleHex(e.target.value)}
                 />
               </div>
-
-              {/* <div className="mt-0.5 ">
-                <Label className="text-xs">H</Label>
-                <div>
-
-
-                  <Input
-                    className="h-7 px-1 pb-1.5 text-xs"
-                    value={hsl.h}
-                    onChange={(e) => handleHslChange(e, 'h')}
-                  />
-                  <Input
-                    className="h-7 px-1 pb-1.5 text-xs"
-                    value={hsl.s}
-                    onChange={(e) => handleHslChange(e, 's')}
-                  />
-                  <Input
-                    className="h-7 px-1 pb-1.5 text-xs"
-                    value={hsl.l}
-                    onChange={(e) => handleHslChange(e, 'l')}
-                  />
-                  <Input
-                    className="h-7 px-1 pb-1.5 text-xs"
-                    value={hsl.a}
-                    onChange={(e) => handleHslChange(e, 'a')}
-                  />
+              <div className="mt-2 ">
+                <p className="text-xs">Alpha</p>
+                <div className="flex gap-2 items-center">
+                  <div className="w-10/12 ">
+                    <Slider
+                      className="bg-secondary rounded-md"
+                      value={alpha}
+                      max={100}
+                      step={1}
+                      onValueChange={handleSliderChange}
+                    />
+                  </div>
+                  <div className="w-2/12 ">
+                    <p className="text-xs ">{formatSliderValue(alpha[0])}</p>
+                  </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </DropdownMenuContent>
         </DropdownMenu>

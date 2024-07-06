@@ -8,7 +8,7 @@ export const themeColors = [
 {
     title: "Primary",
     variable: "--primary",
-    hex: "--primary-hex", // Definindo o valor hex para cada variável de cor
+    hex: "--primary-hex",
   },
   {
     title: "Primary Foreground",
