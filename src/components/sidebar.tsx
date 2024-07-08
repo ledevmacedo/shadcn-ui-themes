@@ -25,8 +25,10 @@ export async function Sidebar() {
         <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
           Radius
         </h4>
-
         <Radius />
+        <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
+          Background Image
+        </h4>
       </ScrollArea>
     </aside>
   );

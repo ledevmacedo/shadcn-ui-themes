@@ -1,9 +1,11 @@
+
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { Background } from "@/components/background";
 
 export const metadata: Metadata = {
   title: "shadcn/ui themes",
@@ -16,8 +18,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="bg-cover bg-center bg-[url('https://i.ibb.co/BfNqFqR/bg.png')]">
       <body className={GeistSans.className}>
         <ThemeProvider
           attribute="class"
@@ -29,6 +32,6 @@ export default function RootLayout({
           <Toaster />
         </ThemeProvider>
       </body>
-    </html>
+    </html >
   );
 }
