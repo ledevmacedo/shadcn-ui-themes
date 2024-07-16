@@ -7,7 +7,7 @@ import { Item } from "@/components/item";
 
 export async function Sidebar() {
   return (
-    <aside className="sticky top-0 z-30 hidden h-[calc(100vh-3.6rem)] w-full shrink-0 md:block">
+    <aside className="sticky top-0 z-30 hidden h-full w-full shrink-0 md:block">
       <ScrollArea className="relative h-full overflow-hidden py-6 pl-8 pr-6 lg:py-8">
         <h4 className="mb-1 flex items-center justify-between rounded-md px-2 py-1 text-sm font-semibold">
           Theming

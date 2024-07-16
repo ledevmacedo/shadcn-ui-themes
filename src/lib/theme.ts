@@ -5,7 +5,7 @@ export interface Theme {
 }
 
 export const themeColors = [
-{
+  {
     title: "Primary",
     variable: "--primary",
     hex: "--primary-hex",
@@ -86,14 +86,19 @@ export const themeColors = [
     hex: "--destructive-foreground-hex",
   },
   {
-    title: "Border",
-    variable: "--border",
-    hex: "--border-hex",
-  },
-  {
     title: "Input",
     variable: "--input",
     hex: "--input-hex",
+  },
+  {
+    title: "Input Foreground",
+    variable: "--input-foreground",
+    hex: "--input-foreground-hex",
+  },
+  {
+    title: "Border",
+    variable: "--border",
+    hex: "--border-hex",
   },
   {
     title: "Ring",
@@ -105,7 +110,7 @@ export const themeColors = [
 export const radiusTheme = {
   title: "Radius",
   variable: "--radius",
-  hex: ''
+  hex: "",
 };
 
 export type savedTheme = {
@@ -114,6 +119,6 @@ export type savedTheme = {
   colors: {
     title: string;
     variable: string;
-    hex:  Theme[];
+    hex: Theme[];
   }[];
 };

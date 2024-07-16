@@ -94,8 +94,6 @@ export default function Home() {
                 <OrderBlock />
               </TabsContent>
             </Tabs>
-
-
           </section>
         </div>
       </div>
