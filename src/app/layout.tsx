@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en" suppressHydrationWarning className="bg-cover bg-center bg-[url('https://i.ibb.co/BfNqFqR/bg.png')]">
+    <html lang="en" suppressHydrationWarning className="bg-cover bg-center bg-darkimg">
       <body className={GeistSans.className}>
         <ThemeProvider
           attribute="class"

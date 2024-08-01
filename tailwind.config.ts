@@ -16,6 +16,10 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        darkimg: "url('/bg.png')",
+        "footer-texture": "url('/img/footer-texture.png')",
+      },
       colors: {
         border: "hsl(var(--border))",
         ring: "hsl(var(--ring))",
