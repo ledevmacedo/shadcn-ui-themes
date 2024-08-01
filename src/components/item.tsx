@@ -129,6 +129,8 @@ export function Item({ theme }: ItemProps) {
     updateColors({ ...hsl, a: newAlpha[0] / 100 });
   };
 
+
+
   const formatSliderValue = (alpha: number): string => {
     if (alpha === 0) {
       return "0";
@@ -138,6 +140,23 @@ export function Item({ theme }: ItemProps) {
       return "1";
     }
   };
+
+  const handleInputChange = (e: any) => {
+    let newValue = parseInt(e.target.value, 10);
+    if (isNaN(newValue)) {
+      newValue = 0;
+    } else if (newValue > 100) {
+      newValue = 100;
+    } else if (newValue < 0) {
+      newValue = 0;
+    }
+    setAlpha([newValue]);
+    const newHsva = { ...hsva, a: newValue / 100 };
+    setHsva(newHsva);
+    setHsl({ ...hsl, a: newValue / 100 });
+    updateColors({ ...hsl, a: newValue / 100 });
+  };
+
 
   const [alpha, setAlpha] = useState<number[]>([Math.round(hsva.a * 100)]);
 
@@ -183,10 +202,10 @@ export function Item({ theme }: ItemProps) {
                   onChange={(e) => handleHex(e.target.value)}
                 />
               </div>
-              <div className="mt-2 ">
+              <div className="mt-2">
                 <p className="text-xs">Alpha</p>
                 <div className="flex gap-2 items-center">
-                  <div className="w-10/12 ">
+                  <div className="w-10/12">
                     <Slider
                       className="bg-secondary rounded-md"
                       value={alpha}
@@ -195,11 +214,19 @@ export function Item({ theme }: ItemProps) {
                       onValueChange={handleSliderChange}
                     />
                   </div>
-                  <div className="w-2/12 ">
-                    <p className="text-xs ">{formatSliderValue(alpha[0])}</p>
+                  <div className="w-2/12">
+                    <Input
+                      min={0}
+                      max={100}
+                      type="number"
+                      className="text-xs text-center w-full p-0"
+                      value={alpha[0]}
+                      onChange={handleInputChange}
+                    />
                   </div>
                 </div>
               </div>
+
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
