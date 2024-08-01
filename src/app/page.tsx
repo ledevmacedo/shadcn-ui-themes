@@ -5,7 +5,7 @@ import { Header } from "@/components/header";
 import { AlertCircle, ArrowRight, Terminal } from "@/components/icons";
 import { Sidebar } from "@/components/sidebar";
 import { ToastDemo } from "@/components/toast-demo";
-
+import { useState } from "react";
 import { SaveThemeDialog } from "@/components/save-theme-dialog";
 import { SavedThemes } from "@/components/saved-themes";
 import {
@@ -61,6 +61,12 @@ import {
 import { DefaultBlock } from "@/components/blocks/defaultBlock";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { OrderBlock } from "@/components/blocks/orderBlock";
+import { CalendarDemo } from "@/components/demos/calendarDemo";
+import { DatePickerWithRange } from "@/components/demos/DatePickerWithRange";
+import { CommandDemo } from "@/components/demos/commandDemo";
+import { ChartDemo } from "@/components/demos/chartDemo";
+import { Badge } from "@/components/ui/badge";
+import { RadialChart } from "@/components/demos/radialChart";
 
 export default function Home() {
   return (
@@ -86,12 +92,42 @@ export default function Home() {
               <TabsList>
                 <TabsTrigger value="default">Default</TabsTrigger>
                 <TabsTrigger value="orderBlock">Orders</TabsTrigger>
+                <TabsTrigger value="demos">Demos<Badge className="bg-lime-400 py-0 px-1 ml-2">New</Badge></TabsTrigger>
+                <TabsTrigger value="charts">Charts<Badge className="bg-lime-400 py-0 px-1 ml-2">New</Badge></TabsTrigger>
+                <TabsTrigger value="custom">Custom</TabsTrigger>
               </TabsList>
               <TabsContent value="default">
                 <DefaultBlock />
               </TabsContent>
               <TabsContent value="orderBlock">
                 <OrderBlock />
+              </TabsContent>
+              <TabsContent value="demos">
+                <div className="flex flex-col gap-4 flex-wrap">
+                  <ChartDemo />
+                  <div className="flex gap-4">
+
+                    <CalendarDemo />
+                    <CommandDemo />
+                  </div>
+                  <DatePickerWithRange />
+                </div>
+              </TabsContent>
+              <TabsContent value="charts">
+                <div className="flex gap-2 md:flex-nowrap flex-wrap" >
+                  <div className="w-full md:w-auto">
+                    <ChartDemo />
+                  </div>
+                  <div className="w-full md:w-auto">
+                    <RadialChart />
+                  </div>
+                </div>
+              </TabsContent>
+              <TabsContent value="custom">
+                <div className="w-full h-screen flex justify-center content-center items-center">
+                  <h1 className="text-2xl font-semibold">Add your current component here</h1>
+
+                </div>
               </TabsContent>
             </Tabs>
           </section>

@@ -95,6 +95,16 @@ export const themeColors = [
     variable: "--input-foreground",
     hex: "--input-foreground-hex",
   },
+  // {
+  //   title: "Outline",
+  //   variable: "--outline",
+  //   hex: "--outline-hex",
+  // },
+  // {
+  //   title: "Outline Foreground",
+  //   variable: "--outline-foreground",
+  //   hex: "--outline-foreground-hex",
+  // },
   {
     title: "Border",
     variable: "--border",

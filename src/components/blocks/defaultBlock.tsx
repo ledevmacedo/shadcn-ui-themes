@@ -56,6 +56,8 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge"
+
 
 export function DefaultBlock() {
     return (
@@ -231,6 +233,21 @@ export function DefaultBlock() {
                     <Button variant="ghost">Ghost</Button>
                     <Button variant="destructive">Destructive</Button>
                     <Button variant="link">Link</Button>
+                </div>
+                <h1 className="text-xl font-semibold">Badges</h1>
+                <div className="mt-2 grid grid-cols-2 gap-2 lg:grid-cols-6">
+                    <div>
+                        <Badge variant="default">Default</Badge>
+                    </div>
+                    <div>
+                        <Badge variant="secondary">Secondary</Badge>
+                    </div>
+                    <div>
+                        <Badge variant="outline">Secondary</Badge>
+                    </div>
+                    <div>
+                        <Badge variant="destructive">Secondary</Badge>
+                    </div>
                 </div>
             </section>
         </>
